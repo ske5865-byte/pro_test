@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,9 @@ public class SecurityConfig {
                 authorizeRequests
                     // Permit all users to access the home, signup, and login pages
                     .requestMatchers("/", "/signup", "/login", "/h2-console/**").permitAll()
-                    // All other requests require authentication
+                    // Permit read access to posts for everyone
+                    .requestMatchers(HttpMethod.GET, "/posts", "/posts/{id}").permitAll()
+                    // All other requests (including creating, updating, deleting posts) require authentication
                     .anyRequest().authenticated()
             )
             .formLogin(formLogin ->
