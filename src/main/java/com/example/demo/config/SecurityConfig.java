@@ -4,19 +4,41 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/**").permitAll()
+                    // Permit all users to access the home, signup, and login pages
+                    .requestMatchers("/", "/signup", "/login", "/h2-console/**").permitAll()
+                    // All other requests require authentication
+                    .anyRequest().authenticated()
+            )
+            .formLogin(formLogin ->
+                formLogin
+                    // Specify the custom login page
+                    .loginPage("/login")
+                    // Redirect to the home page on successful login
+                    .defaultSuccessUrl("/", true)
+                    .permitAll()
+            )
+            .logout(logout ->
+                logout
+                    // Redirect to home on logout
+                    .logoutSuccessUrl("/")
             )
             .csrf(csrf -> csrf.disable()) // Disabling CSRF for H2 console
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // Disabling frame options for H2 console
