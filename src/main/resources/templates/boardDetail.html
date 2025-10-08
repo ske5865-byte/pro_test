@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detail</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .post-header { border-bottom: 1px solid #ddd; margin-bottom: 20px; padding-bottom: 10px; }
+        .post-meta { font-size: 0.9em; color: #777; }
+        .post-content { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="post-header">
+        <h1 th:text="${post.title}">Post Title</h1>
+        <div class="post-meta">
+            <span>By <strong th:text="${post.author.username}">Author</strong></span> |
+            <span>On <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">Date</span></span>
+        </div>
+    </div>
+
+    <div class="post-content" th:text="${post.content}">
+        <p>This is the full content of the post.</p>
+    </div>
+
+    <hr/>
+    <a th:href="@{/board/list}">Back to List</a>
+</body>
+</html>

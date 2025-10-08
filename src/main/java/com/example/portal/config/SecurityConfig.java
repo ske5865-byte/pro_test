@@ -26,7 +26,9 @@ public class SecurityConfig {
                 .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/main.html").permitAll()
                 .requestMatchers("/register", "/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/members/check-username", "/api/members/check-email").permitAll()
-                // All other requests require authentication
+                // Allow read access to the board for everyone
+                .requestMatchers(HttpMethod.GET, "/board/**").permitAll()
+                // All other requests require authentication (this includes POST to /board/write)
                 .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin

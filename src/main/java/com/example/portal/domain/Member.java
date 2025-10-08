@@ -3,6 +3,8 @@ package com.example.portal.domain;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -24,6 +26,9 @@ public class Member {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
     protected Member() {}
 
     public Member(String username, String password, String email) {
@@ -38,6 +43,10 @@ public class Member {
     public String getPassword() { return password; }
     public String getEmail() { return email; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
 
     // Setter for password (needed for encoding)
     public void setPassword(String password) {
