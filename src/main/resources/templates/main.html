@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <header class="main-header container">
+        <div class="logo">Public Portal</div>
+        <nav class="main-nav">
+            <a th:href="@{/}">Home</a>
+            <a href="#">Notice</a>
+            <a href="#">Join</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="main-visual">
+            <div class="container">
+                <h1>Your Public Service Hub</h1>
+                <p>Accessible information and services for everyone.</p>
+            </div>
+        </section>
+
+        <section class="content-section container">
+            <div class="card-grid">
+                <div class="card">
+                    <img th:src="@{/images/card1.jpg}" alt="Service 1">
+                    <div class="card-body">
+                        <h3>Community News</h3>
+                        <p>Stay updated with the latest news and announcements from your community.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img th:src="@{/images/card2.jpg}" alt="Service 2">
+                    <div class="card-body">
+                        <h3>Public Services</h3>
+                        <p>Easily access a wide range of public services and resources online.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img th:src="@{/images/card3.jpg}" alt="Service 3">
+                    <div class="card-body">
+                        <h3>Events Calendar</h3>
+                        <p>Find out about upcoming events and workshops in your area.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Public Portal. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
