@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,21 @@
         <div class="logo">Public Portal</div>
         <nav class="main-nav">
             <a th:href="@{/}">Home</a>
-            <a href="#">Notice</a>
-            <a href="#">Join</a>
-            <a href="#">Login</a>
+            <a th:href="@{/board/list}">Notice</a>
+
+            <!-- Links for anonymous users -->
+            <div sec:authorize="isAnonymous()" style="display: inline;">
+                <a th:href="@{/register}">Register</a>
+                <a th:href="@{/login}">Login</a>
+            </div>
+
+            <!-- Links for authenticated users -->
+            <div sec:authorize="isAuthenticated()" style="display: inline;">
+                <span style="margin-left: 25px;">Welcome, <span sec:authentication="name">User</span>!</span>
+                <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 15px;">
+                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #1E4E9C; font: inherit; font-weight: 500;">Logout</button>
+                </form>
+            </div>
         </nav>
     </header>
 

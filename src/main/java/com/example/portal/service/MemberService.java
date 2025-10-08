@@ -22,8 +22,8 @@ public class MemberService {
     public Long join(String username, String password, String email) {
         validateDuplicateMember(username, email);
         Member member = new Member(username, passwordEncoder.encode(password), email);
-        memberRepository.save(member);
-        return member.getId();
+        Member savedMember = memberRepository.save(member);
+        return savedMember.getId();
     }
 
     private void validateDuplicateMember(String username, String email) {
